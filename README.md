@@ -53,7 +53,3 @@
  с письменного согласия автора.
 
 
-```bash
-git clone https://github.com/ancf-hue/anti-ai-qwen-academy-informatika-gve-9-2027.git
-cd anti-ai-qwen-academy-informatika-gve-9-2027
-# открой index.html в браузере
