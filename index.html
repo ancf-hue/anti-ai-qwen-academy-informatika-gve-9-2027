@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<title>Анти-ИИ Квен Академия | Информатика ГВЭ-9 2027</title>
+<meta name="description" content="Бесплатный тренажёр для ГВЭ-9 по информатике 2027: письменная и устная формы, критерии, справочник." />
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+<style>
+  * { box-sizing: border-box; }
+  :root, [data-theme="dark"] {
+    --bg: #04140a;
+    --bg-grad1: rgba(34, 255, 136, 0.18);
+    --bg-grad2: rgba(0, 204, 102, 0.14);
+    --card: rgba(14, 38, 22, 0.78);
+    --card-soft: rgba(34, 255, 136, 0.06);
+    --border: rgba(34, 255, 136, 0.2);
+    --border-strong: rgba(34, 255, 136, 0.4);
+    --text: #e8ffec;
+    --text-soft: #b8e6c4;
+    --muted: #9ac8a8;
+    --accent: #22ff88;
+    --accent2: #00cc66;
+    --accent-text: #04140a;
+    --light-green: rgba(34, 255, 136, 0.1);
+    --red: #ef4444;
+    --orange: #f59e0b;
+    --green: #10b981;
+    --green-light: rgba(16, 185, 129, 0.15);
+    --green-border: rgba(16, 185, 129, 0.4);
+    --shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+    --header-bg: rgba(4, 20, 10, 0.85);
+  }
+  [data-theme="light"] {
+    --bg: #f0fdf4;
+    --bg-grad1: rgba(34, 197, 94, 0.12);
+    --bg-grad2: rgba(21, 128, 61, 0.08);
+    --card: #ffffff;
+    --card-soft: #f8fafc;
+    --border: #bbf7d0;
+    --border-strong: #22c55e;
+    --text: #166534;
+    --text-soft: #334155;
+    --muted: #64748b;
+    --accent: #22c55e;
+    --accent2: #15803d;
+    --accent-text: #ffffff;
+    --light-green: #dcfce7;
+    --red: #dc2626;
+    --orange: #d97706;
+    --green: #059669;
+    --green-light: #dcfce7;
+    --green-border: #bbf7d0;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    --header-bg: rgba(255, 255, 255, 0.95);
+  }
+  body { margin: 0; font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    background: radial-gradient(circle at top left,var(--bg-grad1),transparent 30%),
+                radial-gradient(circle at top right,var(--bg-grad2),transparent 28%),var(--bg);
+    color: var(--text); line-height: 1.55; min-height: 100vh; transition: background-color 0.3s, color 0.3s; }
+  .container { width: min(1120px, 92%); margin: 0 auto; }
+  header { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(14px);
+    background: var(--header-bg); border-bottom: 1px solid var(--border); }
+  .topbar { display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; padding: 14px 0; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-logo { width: 46px; height: 46px; border-radius: 15px; object-fit: cover;
+    background: var(--light-green); border: 1px solid var(--border-strong); flex: 0 0 auto; }
+  .brand strong { display: block; font-size: 16px; line-height: 1.2; }
+  .brand small { color: var(--muted); font-size: 12px; }
+  nav { display: flex; gap: 18px; flex-wrap: wrap; }
+  nav a { color: var(--text-soft); text-decoration: none; font-weight: 700; font-size: 14px; transition: color 0.2s; }
+  nav a:hover { color: var(--accent); }
+  .top-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-left: auto; }
+  .icon-btn { display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid var(--border-strong); background: var(--light-green);
+    color: var(--muted); border-radius: 999px; padding: 8px 12px;
+    font-weight: 850; cursor: pointer; font-size: 13px; }
+  .icon-btn:hover { background: var(--card-soft); color: var(--accent); }
+  .lang-option { opacity: .6; }
+  .lang-option.active { opacity: 1; color: var(--accent); }
+  .timer-widget { display: flex; align-items: center; gap: 6px;
+    background: var(--light-green); border: 1px solid var(--border-strong);
+    border-radius: 14px; padding: 6px 8px; }
+  #timerDisplay { font-variant-numeric: tabular-nums; font-weight: 900;
+    min-width: 84px; text-align: center; font-size: 13px; }
+  .timer-btn { border: 0; background: var(--card-soft); color: var(--text);
+    border-radius: 10px; padding: 6px 9px; cursor: pointer; font-size: 14px; }
+  .timer-btn:hover { background: var(--light-green); }
+  .timer-widget.warning #timerDisplay { color: var(--orange); }
+  .timer-widget.danger #timerDisplay { color: var(--red); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.5} }
+  .hero { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px;
+    padding: 48px 0 28px; align-items: start; }
+  .badge { display: inline-flex; align-items: center; padding: 8px 12px;
+    border-radius: 999px; background: var(--light-green); border: 1px solid var(--border-strong);
+    color: var(--accent); font-size: 13px; font-weight: 700; }
+  h1 { font-size: clamp(30px, 4.5vw, 50px); line-height: 1.05; margin: 16px 0; }
+  h1 .accent { color: var(--accent); }
+  .lead { color: var(--text-soft); max-width: 72ch; font-size: 17px; }
+  .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
+  .btn { border: 0; border-radius: 14px; padding: 14px 18px; font-weight: 850;
+    cursor: pointer; background: linear-gradient(135deg,var(--accent2),var(--accent));
+    color: var(--accent-text); box-shadow: 0 12px 30px rgba(34,255,136,.22); font-size: 15px; }
+  .btn:hover { transform: translateY(-1px); }
+  .btn.secondary { background: var(--light-green); border: 1px solid var(--border-strong);
+    color: var(--text); box-shadow: none; }
+  .btn.small { padding: 10px 14px; font-size: 14px; border-radius: 12px; }
+  .panel { background: var(--card); border: 1px solid var(--border-strong);
+    border-radius: 24px; padding: 22px; box-shadow: var(--shadow); }
+  .panel h3 { margin: 0 0 14px; font-size: 20px; }
+  .metrics { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 18px 0; }
+  .metric { background: var(--light-green); border-radius: 16px; padding: 14px;
+    border: 1px solid var(--border); min-height: 82px; }
+  .metric strong { display: block; font-size: 22px; margin-bottom: 4px; }
+  .metric span { color: var(--muted); font-size: 12px; }
+  progress { width: 100%; height: 10px; border-radius: 999px; overflow: hidden;
+    appearance: none; background: var(--light-green); border: none; margin-top: 10px; }
+  progress::-webkit-progress-bar { background: var(--light-green); border-radius: 999px; }
+  progress::-webkit-progress-value { background: linear-gradient(90deg,var(--accent2),var(--accent)); border-radius: 999px; }
+  .note { color: var(--muted); font-size: 13px; margin-top: 12px; }
+  section { padding: 28px 0; }
+  .section-head { display: flex; justify-content: space-between; align-items: end;
+    gap: 16px; margin-bottom: 18px; flex-wrap: wrap; }
+  h2 { font-size: clamp(24px,3vw,34px); margin: 0; line-height: 1.15; }
+  .sub { color: var(--muted); margin: 6px 0 0; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(245px,1fr)); gap: 16px; }
+  .card { background: var(--card); border: 1px solid var(--border);
+    border-radius: 22px; padding: 20px; box-shadow: var(--shadow); }
+  .card h3 { margin: 0 0 10px; font-size: 20px; }
+  .card p { color: var(--text-soft); margin: 0 0 16px; }
+  .warn-card { border-color: rgba(245,158,11,.4); }
+  .danger-card { border-color: rgba(239,68,68,.4); }
+  .success-card { border-color: var(--green-border); }
+  .tag { display: inline-block; padding: 6px 10px; border-radius: 999px;
+    font-size: 12px; font-weight: 850; margin-bottom: 10px;
+    background: var(--light-green); border: 1px solid var(--border-strong); color: var(--accent); }
+  .tag.red { background: rgba(239,68,68,.14); border-color: rgba(239,68,68,.4); color: var(--red); }
+  .tag.green { background: var(--green-light); border-color: var(--green-border); color: var(--green); }
+  .tag.orange { background: rgba(245,158,11,.14); border-color: rgba(245,158,11,.4); color: var(--orange); }
+  .mini-list { margin: 0; padding-left: 18px; color: var(--text-soft); font-size: 14px; }
+  .mini-list li { margin: 7px 0; }
+  .filter-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;
+    padding: 14px; background: var(--card-soft); border: 1px solid var(--border);
+    border-radius: 16px; align-items: center; }
+  .filter-bar > span { color: var(--muted); font-size: 13px; font-weight: 700; margin-right: 6px; }
+  .filter-btn { padding: 8px 14px; border-radius: 10px; border: 1px solid var(--border-strong);
+    background: var(--light-green); color: var(--text); cursor: pointer;
+    font-size: 13px; font-weight: 700; }
+  .filter-btn:hover { background: var(--card-soft); }
+  .filter-btn.active { background: linear-gradient(135deg,var(--accent2),var(--accent));
+    border-color: transparent; color: var(--accent-text); }
+  .question-block { background: var(--card); border: 1px solid var(--border);
+    border-radius: 24px; padding: 24px; margin-bottom: 26px; box-shadow: var(--shadow); }
+  .q-number { display: inline-block; padding: 6px 12px; border-radius: 999px;
+    background: var(--light-green); border: 1px solid var(--border-strong);
+    color: var(--accent); font-size: 13px; font-weight: 850; margin-bottom: 14px; }
+  .q-part { margin-bottom: 18px; }
+  .q-part-label { display: inline-block; font-size: 12px; font-weight: 900;
+    text-transform: uppercase; letter-spacing: .5px; color: var(--accent); margin-bottom: 8px; }
+  .q-text { font-size: 16px; font-weight: 700; margin: 0; line-height: 1.5; white-space: pre-wrap; }
+  .q-info { background: var(--light-green); border-left: 4px solid var(--accent);
+    border-radius: 0 14px 14px 0; padding: 16px 18px; margin: 18px 0;
+    color: var(--text-soft); font-size: 15px; line-height: 1.55; white-space: pre-wrap; }
+  .options { display: grid; gap: 10px; }
+  .option { text-align: left; width: 100%; background: var(--card-soft);
+    border: 1px solid var(--border); color: var(--text); border-radius: 14px;
+    padding: 14px 16px; cursor: pointer; font-size: 15px; }
+  .option:hover:not(:disabled) { background: var(--light-green); border-color: var(--border-strong); }
+  .option.correct { background: rgba(16,185,129,.18); border-color: var(--green); }
+  .option.wrong { background: rgba(239,68,68,.18); border-color: var(--red); }
+  .option:disabled { cursor: default; }
+  .match-input-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 14px; }
+  .match-input-row input { padding: 12px 16px; border-radius: 12px;
+    border: 1px solid var(--border-strong); background: var(--card-soft);
+    color: var(--text); font-size: 16px; font-weight: 700; font-family: inherit;
+    width: 240px; text-align: center; letter-spacing: 2px; }
+  .match-input-row input:focus { outline: none; border-color: var(--accent); background: var(--light-green); }
+  .writing-area { margin-top: 14px; }
+  .writing-area textarea { width: 100%; padding: 14px 16px; border-radius: 12px;
+    border: 1px solid var(--border-strong); background: var(--card-soft);
+    color: var(--text); font-size: 15px; font-family: inherit;
+    resize: vertical; min-height: 160px; line-height: 1.6; }
+  .result-block { margin-top: 14px; padding: 14px 16px; border-radius: 14px; }
+  .result-block.correct { background: var(--light-green); border: 1px solid var(--border-strong); }
+  .result-block.wrong { background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.4); }
+  .verdict { font-size: 17px; font-weight: 900; margin-bottom: 8px; }
+  .verdict.correct { color: var(--green); }
+  .verdict.wrong { color: var(--red); }
+  .result-row { margin: 6px 0; color: var(--text-soft); font-size: 15px; }
+  .result-row strong { color: var(--text); }
+  .summary { background: var(--light-green); border: 1px solid var(--border-strong);
+    border-radius: 24px; padding: 24px; text-align: center; margin-top: 24px; }
+  .summary .score { font-size: 48px; font-weight: 950; color: var(--accent); }
+  .reset-bar { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; justify-content: flex-end; }
+  .checklist { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .check-item { display: flex; gap: 12px; align-items: flex-start;
+    background: var(--card-soft); border: 1px solid var(--border);
+    border-radius: 16px; padding: 14px; }
+  .check-item input { width: 20px; height: 20px; margin-top: 3px; accent-color: var(--accent); }
+  .check-item label { cursor: pointer; color: var(--text-soft); font-size: 15px; }
+  .check-item.done { opacity: .75; background: var(--light-green); border-color: var(--border-strong); }
+  .check-item.done label { text-decoration: line-through; color: var(--muted); }
+  .plan-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 12px; }
+  .day { background: var(--card-soft); border: 1px solid var(--border);
+    border-radius: 18px; padding: 16px; min-height: 112px; position: relative; }
+  .day::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+    background: var(--accent); border-radius: 18px 0 0 18px; }
+  .day b { display: block; color: var(--accent); margin-bottom: 6px; font-size: 14px; }
+  .day p { margin: 0; color: var(--text-soft); font-size: 14px; }
+  .day.critical { border-color: rgba(239,68,68,.4); background: rgba(239,68,68,.08); }
+  .day.critical::before { background: var(--red); }
+  .manual-card { background: var(--card); border: 1px solid var(--border);
+    border-radius: 22px; padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow); }
+  .manual-card h3 { margin: 0 0 10px; font-size: 20px; }
+  .manual-card p { color: var(--text-soft); margin: 8px 0; white-space: pre-wrap; }
+  .check-input { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--border-strong); }
+  .check-input label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 8px; font-weight: 700; }
+  .check-input textarea { width: 100%; padding: 12px 14px; border-radius: 12px;
+    border: 1px solid var(--border-strong); background: var(--card-soft);
+    color: var(--text); font-size: 15px; font-family: inherit; resize: vertical; min-height: 100px; }
+  .oral-self-check { margin-top: 12px; padding: 12px 14px; border-radius: 14px;
+    background: var(--card-soft); border: 1px solid var(--border); }
+  .oral-self-check .oral-score-label { display: block; font-size: 13px; font-weight: 700;
+    color: var(--muted); margin-bottom: 8px; }
+  .oral-score-row { display: flex; align-items: center; gap: 8px; padding: 6px 0;
+    font-size: 14px; color: var(--text-soft); }
+  .oral-score-row input[type="radio"] { accent-color: var(--accent); width: 18px; height: 18px; }
+  .oral-score-row label { cursor: pointer; }
+  .oral-ticket-total { margin-top: 10px; padding: 10px 14px; border-radius: 12px;
+    background: var(--light-green); border: 1px solid var(--border-strong);
+    font-weight: 800; color: var(--accent); font-size: 15px; text-align: center; }
+  .oral-summary-box { margin-top: 24px; padding: 24px; border-radius: 24px;
+    background: var(--light-green); border: 1px solid var(--border-strong); text-align: center; }
+  .oral-summary-box .score { font-size: 48px; font-weight: 950; color: var(--accent); }
+  .oral-timer-widget { display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    margin-bottom: 18px; padding: 14px; border-radius: 16px;
+    background: var(--card-soft); border: 1px solid var(--border); }
+  .oral-timer-widget #oralTimerDisplay { font-variant-numeric: tabular-nums;
+    font-weight: 900; font-size: 18px; min-width: 90px; text-align: center; }
+  .oral-timer-widget.warning #oralTimerDisplay { color: var(--orange); }
+  .oral-timer-widget.danger #oralTimerDisplay { color: var(--red); animation: pulse 1s infinite; }
+  .support-card { background: var(--card); border: 1px solid var(--border-strong);
+    border-radius: 24px; padding: 24px; box-shadow: var(--shadow); text-align: center; }
+  .support-card h2 { margin-bottom: 10px; }
+  .support-card p { margin: 10px 0; color: var(--text-soft); }
+  .phone { color: var(--accent); font-weight: 900; text-decoration: none;
+    border-bottom: 1px dashed var(--accent); }
+  .copy-status { margin-left: 8px; color: var(--accent); font-weight: 850; }
+  footer { padding: 30px 0 50px; color: var(--muted); text-align: center;
+    border-top: 1px solid var(--border); margin-top: 30px; }
+  .reference-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+  .reference-table th, .reference-table td { border: 1px solid var(--border);
+    padding: 6px; text-align: left; }
+  .reference-table th { background: var(--light-green); color: var(--accent); }
+  .criteria-block { background: var(--card-soft); border: 1px solid var(--border);
+    border-radius: 14px; padding: 14px 16px; margin-top: 14px;
+    font-size: 13px; color: var(--text-soft); line-height: 1.6; }
+  .criteria-block strong { color: var(--accent); display: block; margin-bottom: 6px; }
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; }
+    .metrics { grid-template-columns: 1fr; }
+    nav { gap: 12px; }
+    .top-controls { width: 100%; justify-content: space-between; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="container topbar">
+    <div class="brand">
+      <img src="favicon.ico" class="brand-logo" alt="Anti-AI Qwen Academy" onerror="this.style.display='none'" />
+      <div>
+        <strong data-i18n="brandTitle">Анти-ИИ Квен Академия</strong>
+        <small data-i18n="brandSub">Информатика • ГВЭ-9 • 2027</small>
+      </div>
+    </div>
+    <nav>
+      <a href="#structure" data-i18n="navStructure">Структура</a>
+      <a href="#topics" data-i18n="navTopics">Разделы</a>
+      <a href="#trainer" data-i18n="navTrainer">Тренажёр</a>
+      <a href="#oral" data-i18n="navOral">Устная форма</a>
+      <a href="#references" data-i18n="navRefs">Справочник</a>
+      <a href="#checklist" data-i18n="navChecklist">Чек-лист</a>
+      <a href="#plan" data-i18n="navPlan">План</a>
+      <a href="#support" data-i18n="navSupport">Поддержать</a>
+    </nav>
+    <div class="top-controls">
+      <button id="themeToggle" class="icon-btn" type="button">
+        <span id="themeIcon">🌙</span>
+      </button>
+      <button id="langToggle" class="icon-btn" type="button">
+        <span class="lang-option active" data-lang="ru">RU</span>
+        <span>/</span>
+        <span class="lang-option" data-lang="en">EN</span>
+      </button>
+      <div class="timer-widget" id="timerWidget" role="group">
+        <span id="timerDisplay">02:30:00</span>
+        <button id="timerToggle" class="timer-btn" type="button">▶</button>
+        <button id="timerReset" class="timer-btn" type="button">↺</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <div>
+      <span class="badge" data-i18n="badge">Бесплатно • HTML • Информатика ГВЭ-9 2027 • Письменная + устная формы</span>
+      <h1 data-i18n="h1">Подготовимся к <span class="accent">ГВЭ-9 по информатике</span> эффективно</h1>
+      <p class="lead" data-i18n="lead">
+        Один файл — работает без интернета. 10 заданий по образцу ФИПИ 2027, критерии оценивания,
+        справочник, устная форма (15 билетов), чек-лист и план подготовки.
+      </p>
+      <div class="actions">
+        <button class="btn" onclick="scrollToId('trainer')" data-i18n="actionTrainer">Пройти тренажёр</button>
+        <button class="btn secondary" onclick="scrollToId('oral')" data-i18n="actionOral">Устная форма</button>
+        <button class="btn secondary" onclick="scrollToId('references')" data-i18n="actionRefs">Критерии и правила</button>
+      </div>
+    </div>
+    <aside class="panel">
+      <h3 data-i18n="quickStats">Твой прогресс</h3>
+      <div class="metrics">
+        <div class="metric">
+          <strong id="answeredCount">0/10</strong>
+          <span data-i18n="metricAnswered">заданий решено</span>
+        </div>
+        <div class="metric">
+          <strong id="correctCount">0</strong>
+          <span data-i18n="metricCorrect">правильных</span>
+        </div>
+        <div class="metric">
+          <strong id="checklistProgress">0%</strong>
+          <span data-i18n="metricChecklist">чек-лист</span>
+        </div>
+      </div>
+      <progress id="overall" value="0" max="100"></progress>
+      <p class="note" data-i18n="noteReset">Ответы сбрасываются при обновлении. Чек-лист тоже сбрасывается.</p>
+    </aside>
+  </section>
+
+  <section id="structure">
+    <div class="section-head">
+      <div>
+        <h2 data-i18n="structureTitle">Структура ГВЭ-9 по информатике 2027</h2>
+        <p class="sub" data-i18n="structureSub">Письменная (150 мин, 11 баллов) + устная (45 мин, 6 баллов).</p>
+      </div>
+    </div>
+    <div class="grid" id="structureGrid"></div>
+  </section>
+
+  <section id="topics">
+    <div class="section-head">
+      <div>
+        <h2 data-i18n="topicsTitle">Ключевые разделы</h2>
+        <p class="sub" data-i18n="topicsSub">Отмечай разделы, которые уже повторил.</p>
+      </div>
+    </div>
+    <div class="grid" id="topicsGrid"></div>
+  </section>
+
+  <section id="trainer">
+    <div class="section-head">
+      <div>
+        <h2 data-i18n="trainerTitle">Тренажёр ГВЭ-9 (письменная форма)</h2>
+        <p class="sub" data-i18n="trainerSub">10 заданий по образцу ФИПИ 2027. Задания 1–9 с автопроверкой, задание 10 — работа с таблицей.</p>
+      </div>
+    </div>
+    <div class="filter-bar">
+      <span data-i18n="filterShow">Показать:</span>
+      <button class="filter-btn active" data-filter="all" id="filterAll" onclick="setFilter('all', this)"></button>
+      <button class="filter-btn" data-filter="part1" id="filterPart1" onclick="setFilter('part1', this)"></button>
+      <button class="filter-btn" data-filter="part2" id="filterPart2" onclick="setFilter('part2', this)"></button>
+    </div>
+    <div class="reset-bar">
+      <button class="btn secondary small" onclick="resetAll()" data-i18n="resetAll">Сбросить ответы</button>
+    </div>
+    <div id="quizContainer"></div>
+    <div id="summaryBox"></div>
+  </section>
+
+  <section id="oral">
+    <div class="section-head">
+      <div>
+        <h2 data-i18n="oralTitle">Устная форма (Билеты)</h2>
+        <p class="sub" data-i18n="oralSub">15 билетов, 2 вопроса: теория + практика. Подготовка — 45 минут. Максимум — 6 баллов.</p>
+      </div>
+    </div>
+    <div class="criteria-block">
+      <strong data-i18n="oralCriteria">Критерии за каждый вопрос:</strong>
+      • 3 балла — полный, системный ответ.<br/>
+      • 2 балла — есть незначительные ошибки.<br/>
+      • 1 балл — неполный ответ или существенные ошибки.<br/>
+      • 0 баллов — не ответил.<br/>
+      <strong>Максимум за билет:</strong> 6 баллов.
+    </div>
+    <div class="oral-timer-widget" id="oralTimerWidget">
+      <strong data-i18n="oralTimerLabel">⏱ 45 минут на подготовку:</strong>
+      <span id="oralTimerDisplay">45:00</span>
+      <button class="timer-btn" id="oralTimerToggle" type="button">▶</button>
+      <button class="timer-btn" id="oralTimerReset" type="button">↺</button>
+    </div>
+    <div id="oralContainer"></div>
+    <div id="oralSummaryBox"></div>
+  </section>
+
+  <section id="references">
+    <div class="section-head">
+      <div>
+        <h2 data-i18n="refsTitle">Справочник и критерии</h2>
+        <p class="sub" data-i18n="refsSub">Критерии оценивания + шкалы перевода + термины.</p>
+      </div>
+    </div>
+    <div class="grid" id="refsGrid"></div>
+    <div class="card" style="margin-top:16px;">
+      <h3 data-i18n="refRules">Что нужно помнить на экзамене</h3>
+      <ul class="mini-list">
+        <li><strong>Письменная часть:</strong> 10 заданий, 150 минут (2,5 часа).</li>
+        <li><strong>Часть 1:</strong> 9 заданий с кратким ответом.</li>
+        <li><strong>Часть 2:</strong> 1 задание с развёрнутым ответом (файл таблицы).</li>
+        <li><strong>Устная часть:</strong> 45 минут на подготовку, 6 баллов максимум.</li>
+        <li><strong>Разрешено:</strong> ПО без доступа к Интернету.</li>
+      </ul>
+    </div>
+    <div class="card" style="margin-top:16px;">
+      <h3>💻 Шпаргалка: Системы счисления и Логика</h3>
+      <table class="reference-table">
+        <tr><th>Понятие</th><th>Описание</th></tr>
+        <tr><td>Бит</td><td>Минимальная единица информации (0 или 1).</td></tr>
+        <tr><td>Байт</td><td>8 бит.</td></tr>
+        <tr><td>Кбайт</td><td>1024 байта.</td></tr>
+        <tr><td>И (AND)</td><td>Истина, если оба высказывания истинны.</td></tr>
+        <tr><td>ИЛИ (OR)</td><td>Истина, если хотя бы одно истинно.</td></tr>
+        <tr><td>НЕ (NOT)</td><td>Меняет значение на противоположное.</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="checklist">
+    <div class="section-head">
+      <div>
+        <h2 data-i18n="checklistTitle">Чек-лист подготовки</h2>
+        <p class="sub" data-i18n="checklistSub">Прогресс не сохраняется — всё сбрасывается при обновлении.</p>
+      </div>
+    </div>
+    <ul class="checklist" id="checklistUl"></ul>
+  </section>
+
+  <section id="plan">
+    <div class="section-head">
+      <div>
+        <h2 data-i18n="planTitle">План подготовки: 20 дней</h2>
+        <p class="sub" data-i18n="planSub">Маршрут по структуре ГВЭ-9 2027.</p>
+      </div>
+    </div>
+    <div class="plan-grid" id="planGrid"></div>
+  </section>
+
+  <section id="support">
+    <div class="support-card">
+      <h2 data-i18n="supportTitle">🤝 ПОДДЕРЖАТЬ ПРОЕКТ 💚</h2>
+      <p data-i18n="supportP1"><strong>Приложение бесплатное. Было и останется.</strong></p>
+      <p data-i18n="supportP2">Все приложения бесплатны и без рекламы. Ваша помощь развивает офлайн-безопасность и образование.</p>
+      <p>
+        <span data-i18n="supportPhoneLabel">📱 ПЕРЕВОД ПО НОМЕРУ:</span>
+        <a class="phone" href="tel:89202275676">8-920-227-56-76</a>
+        <button class="btn small" onclick="copyPhone()" data-i18n="copyPhone">📋 Копировать</button>
+        <span id="copyStatus" class="copy-status" aria-live="polite"></span>
+      </p>
+      <p data-i18n="supportP3">✅ Мгновенно. Без комиссии. Безопасно.</p>
+      <p data-i18n="supportP4">❤️ Спасибо за поддержку!</p>
+      <p>🌟 👉 <a href="https://ancf-hue.github.io/" target="_blank" rel="noopener noreferrer" class="link" data-i18n="supportCatalog" style="color:var(--accent);font-weight:800;text-decoration:none;">Каталог офлайн-приложений Anti-AI Shield</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container" data-i18n="footer">
+    Анти-ИИ Квен Академия • Бесплатный HTML-проект • Информатика ГВЭ-9 2027
+  </div>
+</footer>
+
+<script>
+const STORAGE = {
+  theme: "antiIqwenInfoGVE9_2027_theme",
+  lang: "antiIqwenInfoGVE9_2027_lang"
+};
+
+const I18N = {
+  ru: {
+    docTitle: "Анти-ИИ Квен Академия | Информатика ГВЭ-9 2027",
+    brandTitle: "Анти-ИИ Квен Академия",
+    brandSub: "Информатика • ГВЭ-9 • 2027",
+    navStructure: "Структура", navTopics: "Разделы", navTrainer: "Тренажёр",
+    navOral: "Устная форма", navRefs: "Справочник", navChecklist: "Чек-лист", navPlan: "План", navSupport: "Поддержать",
+    badge: "Бесплатно • HTML • Информатика ГВЭ-9 2027 • Письменная + устная формы",
+    h1: 'Подготовимся к <span class="accent">ГВЭ-9 по информатике</span> эффективно',
+    lead: "Один файл — работает без интернета. 10 заданий по образцу ФИПИ 2027, критерии оценивания, справочник, устная форма (15 билетов), чек-лист и план подготовки.",
+    actionTrainer: "Пройти тренажёр", actionOral: "Устная форма", actionRefs: "Критерии и правила",
+    quickStats: "Твой прогресс",
+    metricAnswered: "заданий решено", metricCorrect: "правильных", metricChecklist: "чек-лист",
+    noteReset: "Ответы сбрасываются при обновлении. Чек-лист тоже сбрасывается.",
+    structureTitle: "Структура ГВЭ-9 по информатике 2027",
+    structureSub: "Письменная (150 мин, 11 баллов) + устная (45 мин, 6 баллов).",
+    topicsTitle: "Ключевые разделы", topicsSub: "Отмечай разделы, которые уже повторил.",
+    trainerTitle: "Тренажёр ГВЭ-9 (письменная форма)",
+    trainerSub: "10 заданий по образцу ФИПИ 2027. Задания 1–9 с автопроверкой, задание 10 — работа с таблицей.",
+    filterShow: "Показать:", filterAll: "Все", filterPart1: "Часть 1 (1–9)", filterPart2: "Часть 2 (10)",
+    resetAll: "Сбросить ответы",
+    oralTitle: "Устная форма (Билеты)",
+    oralSub: "15 билетов, 2 вопроса: теория + практика. Подготовка — 45 минут.",
+    oralCriteria: "Критерии за каждый вопрос:",
+    refsTitle: "Справочник и критерии",
+    refsSub: "Критерии оценивания + шкалы перевода + термины.",
+    refRules: "Что нужно помнить на экзамене",
+    checklistTitle: "Чек-лист подготовки", checklistSub: "Прогресс не сохраняется — всё сбрасывается при обновлении.",
+    planTitle: "План подготовки: 20 дней", planSub: "Маршрут по структуре ГВЭ-9 2027.", dayPrefix: "День",
+    supportTitle: "🤝 ПОДДЕРЖАТЬ ПРОЕКТ 💚",
+    supportP1: "<strong>Приложение бесплатное. Было и останется.</strong>",
+    supportP2: "Все приложения бесплатны и без рекламы. Ваша помощь развивает офлайн-безопасность и образование.",
+    supportPhoneLabel: "📱 ПЕРЕВОД ПО НОМЕРУ:", copyPhone: "📋 Копировать", copied: "✓ Скопировано",
+    supportP3: "✅ Мгновенно. Без комиссии. Безопасно.", supportP4: "❤️ Спасибо за поддержку!",
+    supportCatalog: "Каталог офлайн-приложений Anti-AI Shield",
+    footer: "Анти-ИИ Квен Академия • Бесплатный HTML-проект • Информатика ГВЭ-9 2027",
+    resultCorrect: "✅ Правильно!", resultWrong: "❌ Неправильно.",
+    correctAnswer: "Правильный ответ:", explanation: "Пояснение:", source: "Источник:",
+    summaryAnswered: "Пройдено:", summaryOf: "из", summaryCorrect: "Правильных:",
+    summaryFinish: "Ответь на все задания, чтобы увидеть итог.",
+    verdictExcellent: "Отличный результат! Ты хорошо готов к ГВЭ-9 2027.",
+    verdictGood: "Хорошо, но разбери ошибки по заданиям.",
+    verdictNeeds: "Нужно внимательно проработать задания ГВЭ-9 2027.",
+    resetConfirm: "Сбросить все ответы?",
+    copyFail: "Не удалось скопировать. Номер: ",
+    questionLabel1: "1. Задание", questionLabel2: "2. Информация", questionLabel3: "3. Тренажёр — ответь сам",
+    levelShort: "Краткий ответ", levelLong: "Развёрнутый ответ",
+    sourceShort: "ГВЭ-9 2027, задание {task}",
+    sourceLong: "ГВЭ-9 2027, задание {task} (развёрнутый ответ)",
+    timerBasic: "ГВЭ-9 — 150 мин", timerPractice: "Тренировка — 60 мин", timerUp: "Время вышло!",
+    timerStart: "Запустить", timerPause: "Пауза", timerReset: "Сброс",
+    oralTag: "Устная форма", oralTaskPrefix: "Билет",
+    oralQ1: "Теоретический вопрос", oralQ2: "Практический вопрос (алгоритм)",
+    oralSelfLabel: "Твой ответ (для самопроверки):",
+    oralPlaceholder: "Опиши алгоритм или ответь на вопрос...",
+    matchPlaceholder: "Например: 125",
+    matchCheck: "Проверить",
+    showSolution: "Показать эталон",
+    oralScore3: "3 — полно и правильно",
+    oralScore2: "2 — в целом верно, но с неточностями",
+    oralScore1: "1 — существенные ошибки, но смысл понятен",
+    oralScore0: "0 — не ответил",
+    oralTicketTotal: "Итог за билет",
+    oralSummaryProgress: "Оценено билетов",
+    oralScaleHint: "Шкала: «2» 0–1, «3» 2–3, «4» 4–5, «5» 6.",
+    oralTimerLabel: "⏱ 45 минут на подготовку:",
+    oralTimerUp: "Время подготовки вышло!"
+  },
+  en: {
+    docTitle: "Anti-AI Qwen Academy | Informatics GVE-9 2027",
+    brandTitle: "Anti-AI Qwen Academy",
+    brandSub: "Informatics • GVE-9 • 2027",
+    navStructure: "Structure", navTopics: "Sections", navTrainer: "Trainer",
+    navOral: "Oral Exam", navRefs: "References", navChecklist: "Checklist", navPlan: "Plan", navSupport: "Support",
+    badge: "Free • HTML • Informatics GVE-9 2027 • Written + oral",
+    h1: 'Prepare for <span class="accent">GVE-9 Informatics</span> effectively',
+    lead: "One file — works offline. 10 tasks based on FIPI 2027 sample, evaluation criteria, reference, oral exam (15 tickets), checklist and plan.",
+    actionTrainer: "Start trainer", actionOral: "Oral Exam", actionRefs: "Criteria & rules",
+    quickStats: "Your progress",
+    metricAnswered: "tasks solved", metricCorrect: "correct", metricChecklist: "checklist",
+    noteReset: "Answers reset on reload. Checklist also resets.",
+    structureTitle: "GVE-9 Informatics 2027 structure",
+    structureSub: "Written (150 min, 11 pts) + oral (45 min, 6 pts).",
+    topicsTitle: "Key sections", topicsSub: "Mark sections you've reviewed.",
+    trainerTitle: "GVE-9 Trainer (written form)",
+    trainerSub: "10 tasks based on FIPI 2027 sample. Tasks 1–9 auto-check, task 10 — spreadsheet.",
+    filterShow: "Show:", filterAll: "All", filterPart1: "Part 1 (1–9)", filterPart2: "Part 2 (10)",
+    resetAll: "Reset answers",
+    oralTitle: "Oral Exam (Tickets)",
+    oralSub: "15 tickets, 2 questions: theory + practice. Prep — 45 min.",
+    oralCriteria: "Criteria per question:",
+    refsTitle: "Reference & criteria",
+    refsSub: "Criteria + conversion scales + terms.",
+    refRules: "What to remember on the exam",
+    checklistTitle: "Preparation checklist", checklistSub: "Progress is not saved — everything resets on reload.",
+    planTitle: "20-day preparation plan", planSub: "Route according to GVE-9 2027 structure.", dayPrefix: "Day",
+    supportTitle: "🤝 SUPPORT THE PROJECT 💚",
+    supportP1: "<strong>The app is free.</strong>",
+    supportP2: "All apps are free and ad-free.",
+    supportPhoneLabel: "📱 TRANSFER BY PHONE:", copyPhone: "📋 Copy", copied: "✓ Copied",
+    supportP3: "✅ Instantly. No commission.", supportP4: "❤️ Thanks!",
+    supportCatalog: "Catalog of Anti-AI Shield apps",
+    footer: "Anti-AI Qwen Academy • Free HTML project • Informatics GVE-9 2027",
+    resultCorrect: "✅ Correct!", resultWrong: "❌ Wrong.",
+    correctAnswer: "Correct answer:", explanation: "Explanation:", source: "Source:",
+    summaryAnswered: "Completed:", summaryOf: "of", summaryCorrect: "Correct:",
+    summaryFinish: "Answer all tasks to see the result.",
+    verdictExcellent: "Excellent! You're well prepared for GVE-9 2027.",
+    verdictGood: "Good, but analyze your mistakes.",
+    verdictNeeds: "You need to carefully work through GVE-9 2027 tasks.",
+    resetConfirm: "Reset all answers?",
+    copyFail: "Could not copy. Number: ",
+    questionLabel1: "1. Task", questionLabel2: "2. Info", questionLabel3: "3. Trainer — answer yourself",
+    levelShort: "Short answer", levelLong: "Extended answer",
+    sourceShort: "GVE-9 2027, task {task}",
+    sourceLong: "GVE-9 2027, task {task} (extended)",
+    timerBasic: "GVE-9 — 150 min", timerPractice: "Practice — 60 min", timerUp: "Time is up!",
+    timerStart: "Start", timerPause: "Pause", timerReset: "Reset",
+    oralTag: "Oral Exam", oralTaskPrefix: "Ticket",
+    oralQ1: "Theoretical question", oralQ2: "Practical question (algorithm)",
+    oralSelfLabel: "Your answer (self-check):",
+    oralPlaceholder: "Describe algorithm or answer question...",
+    matchPlaceholder: "Example: 125",
+    matchCheck: "Check",
+    showSolution: "Show model",
+    oralScore3: "3 — fully and correctly",
+    oralScore2: "2 — generally correct, with inaccuracies",
+    oralScore1: "1 — significant errors, but meaning is clear",
+    oralScore0: "0 — no answer",
+    oralTicketTotal: "Ticket total",
+    oralSummaryProgress: "Tickets assessed",
+    oralScaleHint: "Scale: «2» 0–1, «3» 2–3, «4» 4–5, «5» 6.",
+    oralTimerLabel: "⏱ 45 minutes for preparation:",
+    oralTimerUp: "Preparation time is up!"
+  }
+};
+
+let currentLang = localStorage.getItem(STORAGE.lang) || "ru";
+let currentTheme = localStorage.getItem(STORAGE.theme) || "dark";
+let currentFilter = "all";
+let savedAnswers = {};
+let checklistState = {};
+let topicsState = {};
+let oralNotes = {};
+
+function loc(obj) { return obj && obj[currentLang] !== undefined ? obj[currentLang] : ""; }
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, m => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
+}
+function scrollToId(id) { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }
+
+function saveAll() { /* сброс при перезагрузке */ }
+
+function loadAll() {
+  savedAnswers = {};
+  oralNotes = {};
+  checklistState = {};
+  topicsState = {};
+}
+
+function applyTheme() {
+  document.documentElement.setAttribute("data-theme", currentTheme);
+  const icon = document.getElementById("themeIcon");
+  if (icon) icon.textContent = currentTheme === "dark" ? "🌙" : "☀️";
+}
+function toggleTheme() {
+  currentTheme = currentTheme === "dark" ? "light" : "dark";
+  localStorage.setItem(STORAGE.theme, currentTheme);
+  applyTheme();
+}
+
+/* CONTENT */
+const structureCards = [
+  { cardClass: "success-card", tagClass: "green",
+    tag: { ru: "Письменная форма", en: "Written form" },
+    title: { ru: "10 заданий (11 баллов)", en: "10 tasks (11 points)" },
+    items: [
+      { ru: "Часть 1: 9 заданий с кратким ответом.", en: "Part 1: 9 short-answer tasks." },
+      { ru: "Часть 2: 1 задание с развёрнутым ответом (файл).", en: "Part 2: 1 extended-answer task (file)." },
+      { ru: "Разделы: Цифровая грамотность, Теория, Алгоритмы, ИТ.", en: "Sections: Digital Literacy, Theory, Algorithms, IT." },
+      { ru: "Время: 2 часа 30 минут (150 минут).", en: "Time: 2 hours 30 minutes (150 minutes)." }
+    ]
+  },
+  { cardClass: "warn-card", tagClass: "orange",
+    tag: { ru: "Устная форма", en: "Oral form" },
+    title: { ru: "15 билетов (6 баллов)", en: "15 tickets (6 points)" },
+    items: [
+      { ru: "2 вопроса в билете: теория + практика.", en: "2 questions per ticket: theory + practice." },
+      { ru: "Оценивается: знание понятий, умение описывать алгоритмы.", en: "Assessed: knowledge, algorithm description." },
+      { ru: "Время подготовки: 45 минут.", en: "Preparation time: 45 minutes." },
+      { ru: "Максимум: 6 баллов.", en: "Max: 6 points." }
+    ]
+  },
+  { cardClass: "danger-card", tagClass: "red",
+    tag: { ru: "Шкалы перевода", en: "Conversion scales" },
+    title: { ru: "Письменная / Устная", en: "Written / Oral" },
+    items: [
+      { ru: "Письменная: «2» 0–3, «3» 4–6, «4» 7–9, «5» 10–11.", en: "Written: «2» 0–3, «3» 4–6, «4» 7–9, «5» 10–11." },
+      { ru: "Устная: «2» 0–1, «3» 2–3, «4» 4–5, «5» 6.", en: "Oral: «2» 0–1, «3» 2–3, «4» 4–5, «5» 6." }
+    ]
+  }
+];
+
+const topicsCards = [
+  { key: "digital", title: { ru: "Цифровая грамотность", en: "Digital Literacy" },
+    text: { ru: "Объём памяти, единицы измерения, кодирование текста.", en: "Memory size, units, text encoding." } },
+  { key: "theory", title: { ru: "Теоретические основы", en: "Theoretical Basics" },
+    text: { ru: "Логика, модели, графы, системы счисления.", en: "Logic, models, graphs, number systems." } },
+  { key: "algo", title: { ru: "Алгоритмы и программирование", en: "Algorithms & Programming" },
+    text: { ru: "Исполнители, циклы, ветвления, формальное исполнение.", en: "Executors, loops, branches, formal execution." } },
+  { key: "it", title: { ru: "Информационные технологии", en: "Information Technologies" },
+    text: { ru: "Электронные таблицы, сети, адресация, поиск информации.", en: "Spreadsheets, networks, addressing, search." } }
+];
+
+const checklistItems = [
+  { key: "ch1", label: { ru: "Знаю структуру работы (10 заданий, 11 баллов)", en: "Know structure (10 tasks, 11 pts)" } },
+  { key: "ch2", label: { ru: "Умею считать объём памяти (задание 1)", en: "Can calculate memory size (task 1)" } },
+  { key: "ch3", label: { ru: "Понимаю логические операции И, ИЛИ, НЕ (задание 2)", en: "Understand logic AND, OR, NOT (task 2)" } },
+  { key: "ch4", label: { ru: "Умею анализировать графы дорог (задание 3)", en: "Can analyze road graphs (task 3)" } },
+  { key: "ch5", label: { ru: "Умею исполнять алгоритмы для Чертёжника (задание 4)", en: "Can execute Draftsman algorithms (task 4)" } },
+  { key: "ch6", label: { ru: "Умею работать с программами (задание 5)", en: "Can work with programs (task 5)" } },
+  { key: "ch7", label: { ru: "Знаю системы счисления (задание 6)", en: "Know number systems (task 6)" } },
+  { key: "ch8", label: { ru: "Умею оценивать количественные параметры (задание 7)", en: "Can estimate quantitative parameters (task 7)" } },
+  { key: "ch9", label: { ru: "Умею составлять алгоритмы (задание 8)", en: "Can create algorithms (task 8)" } },
+  { key: "ch10", label: { ru: "Знаю принципы адресации в сети (задание 9)", en: "Know network addressing (task 9)" } },
+  { key: "ch11", label: { ru: "Умею обрабатывать данные в электронных таблицах (задание 10)", en: "Can process data in spreadsheets (task 10)" } }
+];
+
+const planDays = [
+  { day: 1, critical: true, text: { ru: "Диагностика: структура ГВЭ-9, форматы, слабые темы.", en: "Diagnostics: GVE-9 structure, formats, weak topics." } },
+  { day: 2, critical: false, text: { ru: "Цифровая грамотность: кодирование текста, объём памяти.", en: "Digital literacy: text encoding, memory size." } },
+  { day: 3, critical: false, text: { ru: "Логика: таблицы истинности, операции И, ИЛИ, НЕ.", en: "Logic: truth tables, AND, OR, NOT." } },
+  { day: 4, critical: false, text: { ru: "Графы: поиск кратчайшего пути.", en: "Graphs: shortest path search." } },
+  { day: 5, critical: false, text: { ru: "Исполнители: Чертёжник, команды смещения.", en: "Executors: Draftsman, move commands." } },
+  { day: 6, critical: false, text: { ru: "Программирование: циклы и переменные (задание 5).", en: "Programming: loops and variables (task 5)." } },
+  { day: 7, critical: false, text: { ru: "Системы счисления: перевод чисел, арифметика.", en: "Number systems: conversion, arithmetic." } },
+  { day: 8, critical: false, text: { ru: "Передача данных: скорость, время, размер файла.", en: "Data transmission: speed, time, file size." } },
+  { day: 9, critical: false, text: { ru: "Алгоритмы для исполнителей (задание 8).", en: "Algorithms for executors (task 8)." } },
+  { day: 10, critical: false, text: { ru: "Сети: IP-адреса, протоколы, доменные имена.", en: "Networks: IP addresses, protocols, domain names." } },
+  { day: 11, critical: true, text: { ru: "Пробник: Часть 1 (задания 1–9) на время.", en: "Practice: Part 1 (tasks 1–9) under time." } },
+  { day: 12, critical: true, text: { ru: "Пробник: Часть 2 (задание 10) — работа с таблицей.", en: "Practice: Part 2 (task 10) — spreadsheet work." } },
+  { day: 13, critical: false, text: { ru: "Разбор ошибок пробника.", en: "Analyzing practice errors." } },
+  { day: 14, critical: false, text: { ru: "Устная часть: теоретические вопросы.", en: "Oral: theoretical questions." } },
+  { day: 15, critical: false, text: { ru: "Устная часть: описание алгоритмов.", en: "Oral: describing algorithms." } },
+  { day: 16, critical: true, text: { ru: "Полный пробник: письменная часть (150 минут).", en: "Full practice test: written part (150 minutes)." } },
+  { day: 17, critical: false, text: { ru: "Повторение слабых тем.", en: "Reviewing weak topics." } },
+  { day: 18, critical: false, text: { ru: "Тренировка скорости решения задач 1–4.", en: "Speed training for tasks 1–4." } },
+  { day: 19, critical: false, text: { ru: "Финальная проверка знаний.", en: "Final knowledge check." } },
+  { day: 20, critical: false, text: { ru: "Отдых, проверка документов, настройка.", en: "Rest, checking documents, mindset." } }
+];
+
+/* QUIZ — 10 заданий (улучшенные ключи) */
+const quiz = [
+  { id: 1, level: "short", task: 1, type: "single", section: "part1",
+    options: ["1) щука", "2) осётр", "3) плотва", "4) таймень"], correct: 2,
+    ru: { text: "В одной из кодировок Unicode каждый символ кодируется 16 битами. Ученик написал текст:\n«Язь, щука, осётр, плотва, таймень, даватчан – названия рыб байкальского региона».\nУченик удалил название одной рыбы, а также запятую и пробел. Размер уменьшился на 16 байт. Какое слово удалил ученик?\n\n1) щука\n2) осётр\n3) плотва\n4) таймень",
+      info: "Задание 1 проверяет умение оценивать объём памяти.", explanation: "16 байт = 128 бит. 128/16 = 8 символов. «плотва» (6) + запятая (1) + пробел (1) = 8 символов.\nОтвет: 3) плотва." },
+    en: { text: "In Unicode each character is 16 bits. A word + comma + space decreased the size by 16 bytes. Which word?", explanation: "Answer: 3) плотва." } },
+
+  { id: 2, level: "short", task: 2, type: "single", section: "part1",
+    options: ["1) портрет", "2) графика", "3) скульптура", "4) натюрморт"], correct: 0,
+    ru: { text: "Для какого из приведённых слов ЛОЖНО высказывание:\n(Вторая буква согласная) ИЛИ (Предпоследняя буква согласная)?\n\n1) портрет\n2) графика\n3) скульптура\n4) натюрморт",
+      info: "Задание 2 проверяет понимание логических операций.", explanation: "портрет: 2-я 'о' (гл), предпосл 'е' (гл). Ложь ИЛИ Ложь = Ложь.\nОтвет: 1." },
+    en: { text: "For which word is the statement FALSE?", explanation: "Answer: 1) портрет." } },
+
+  { id: 3, level: "short", task: 3, type: "single", section: "part1",
+    options: ["1) 11", "2) 12", "3) 13", "4) 14"], correct: 2,
+    ru: { text: "Между населёнными пунктами A, B, C, D, E, F построены дороги. Определите длину кратчайшего пути между A и F.\n\nA-B: 2, A-C: 4\nB-C: 3, B-D: 5\nC-D: 3, C-E: 5\nD-E: 4, D-F: 8\nE-F: 3",
+      info: "Задание 3 проверяет умение находить кратчайший путь.", explanation: "Путь A-B-C-E-F: 2+3+5+3 = 13.\nОтвет: 3) 13." },
+    en: { text: "Find the shortest path between A and F.", explanation: "Answer: 3) 13." } },
+
+  { id: 4, level: "short", task: 4, type: "single", section: "part1",
+    options: ["1) Сместиться на (26, 2)", "2) Сместиться на (–26, 2)", "3) Сместиться на (–2, –26)", "4) Сместиться на (26, –2)"], correct: 0,
+    ru: { text: "Чертёжник выполнил алгоритм:\nСместиться на (16, 12)\nПовтори 10 раз\n  Сместиться на (4, 1)\n  Сместиться на (–3, –2)\nКонец\nНа какую одну команду можно заменить этот алгоритм?",
+      info: "Задание 4 проверяет умение исполнять алгоритмы.", explanation: "Цикл: (4-3, 1-2) = (1, -1). 10 раз: (10, -10).\nНачало: (16, 12).\nИтог: (16+10, 12-10) = (26, 2).\nОтвет: 1) Сместиться на (26, 2)." },
+    en: { text: "What single command replaces the algorithm?", explanation: "Loop: (1, -1) * 10 = (10, -10). Start: (16, 12). Result: (26, 2). Answer: 1." } },
+
+  { id: 5, level: "short", task: 5, type: "match", section: "part1",
+    correctMatch: "15", options: [],
+    ru: { text: "Задание 5. Определите, что будет напечатано в результате работы программы:\n\nvar s, k: integer;\nbegin\n  s := 0;\n  for k := 1 to 5 do\n    s := s + k;\n  writeln(s);\nend.\n\nВведите число.",
+      info: "Задание 5 проверяет умение формально исполнять алгоритмы.", explanation: "Цикл от 1 до 5. s = 1+2+3+4+5 = 15.\nОтвет: 15." },
+    en: { text: "Task 5. What will be printed?\n\ns=0; for k=1 to 5: s=s+k; print(s)", explanation: "Sum 1..5 = 15. Answer: 15." } },
+
+  { id: 6, level: "short", task: 6, type: "match", section: "part1",
+    correctMatch: "9", options: [],
+    ru: { text: "Задание 6. Переведите число 1001 из двоичной системы счисления в десятичную.\nВведите число.",
+      info: "Задание 6 проверяет умение записывать числа в различных системах счисления.", explanation: "1001₂ = 8+1 = 9.\nОтвет: 9." },
+    en: { text: "Task 6. Convert 1001 from binary to decimal.", explanation: "Answer: 9." } },
+
+  { id: 7, level: "short", task: 7, type: "match", section: "part1",
+    correctMatch: "40", options: [],
+    ru: { text: "Задание 7. Скорость передачи данных равна 2¹⁴ бит/с. Сколько секунд необходимо для передачи файла размером 80 Кбайт?\nВведите число.",
+      info: "Задание 7 проверяет умение оценивать количественные параметры.", explanation: "2¹⁴ бит/с = 16384 бит/с = 2048 байт/с = 2 Кбайт/с.\n80 / 2 = 40 секунд.\nОтвет: 40." },
+    en: { text: "Task 7. How many seconds to transfer 80 KB at 2¹⁴ bit/s?", explanation: "2¹⁴ bit/s = 2 KB/s. 80/2 = 40. Answer: 40." } },
+
+  { id: 8, level: "short", task: 8, type: "match", section: "part1",
+    correctMatch: "21122", options: [],
+    ru: { text: "Задание 8. У исполнителя Квадратор две команды:\n1. возведи в квадрат\n2. прибавь 2\nСоставьте алгоритм получения из числа 1 числа 85, содержащий не более 5 команд. В ответе запишите только номера команд.",
+      info: "Задание 8 проверяет умение записывать простой линейный алгоритм.", explanation: "1 → (+2) → 3 → (квадрат) → 9 → (квадрат) → 81 → (+2) → 83 → (+2) → 85.\nКоманды: 2, 1, 1, 2, 2.\nОтвет: 21122." },
+    en: { text: "Task 8. Executor Squarer: 1. square, 2. add 2. Get 85 from 1 (max 5 commands).", explanation: "1+2=3; 3²=9; 9²=81; 81+2=83; 83+2=85. Commands: 2,1,1,2,2. Answer: 21122." } },
+
+  // ИСПРАВЛЕНО: теперь принимаются ОБА варианта
+  { id: 9, level: "short", task: 9, type: "match", section: "part1",
+    correctMatch: ["ВАЖГЕДБ", "ВАЖГЕДЬ"], options: [],
+    ru: { text: "Задание 9. Доступ к файлу presentation.ppt на сервере mega.nz по протоколу https. Запишите последовательность букв, кодирующую адрес:\nА) ://\nБ) .ppt\nВ) https\nГ) .nz\nД) presentation\nЕ) /\nЖ) mega\n\nВведите последовательность букв без пробелов.\nПринимаются варианты: ВАЖГЕДБ и ВАЖГЕДЬ.",
+      info: "Задание 9 проверяет знание принципов адресации.", explanation: "Адрес: https://mega.nz/presentation.ppt\nПолная последовательность: В А Ж Г Е Д Б = ВАЖГЕДБ.\nПо ключу ФИПИ: ВАЖГЕДЬ (без .ppt).\nВ тренажёре принимаются оба варианта." },
+    en: { text: "Task 9. Write the letter sequence for the address https://mega.nz/presentation.ppt", explanation: "Answer: ВАЖГЕДБ or ВАЖГЕДЬ (both accepted)." } },
+
+  { id: 10, level: "long", task: 10, type: "long", section: "part2", options: [],
+    ru: { text: "Задание 10 выполняется на компьютере. Откройте файл с электронной таблицей (данные о 1000 участниках тестирования).\n\n1. Сколько участников получили по русскому языку и математике в сумме более 140 баллов?\n2. Каков средний балл по информатике у участников, набравших по физике более 60 баллов?\n\n(Формулы записать в ячейки H2 и H3.)",
+      info: "Задание 10 (развёрнутый ответ). Максимум 2 балла.\n\nКритерии:\n• Верное решение обоих пунктов (2 балла).\n• Верное решение одного пункта (1 балл).",
+      explanation: "ЭТАЛОН:\n\n1. В H2: =СУММПРОИЗВ((B2:B1001+C2:C1001>140)*1)\n\n2. В H3: =СРЗНАЧЕСЛИ(D2:D1001;\">60\";E2:E1001) с форматом 2 знака." },
+    en: { text: "Task 10 (on computer). Spreadsheet with 1000 participants.", explanation: "SOLUTION:\n1. =SUMPRODUCT((B2:B1001+C2:C1001>140)*1)\n2. =AVERAGEIF(D2:D1001;\">60\";E2:E1001)" } }
+];
+
+/* ORAL — 15 билетов (Информатика) */
+const oralTasks = [
+  { n: 1,
+    ru: { q1: "Двоичный алфавит. Двоичные коды с фиксированной длиной кодового слова. Единицы измерения длины двоичных текстов: бит, байт, килобайт и т.д.",
+      q2: "Опишите алгоритм определения количества положительных элементов последовательности из 25 целых чисел.",
+      explanation: "ЭТАЛОН:\n\nВопрос 1. Двоичный алфавит: 0 и 1. Кодовое слово длины n кодирует 2ⁿ символов. 1 байт = 8 бит; 1 Кбайт = 1024 байт; 1 Мбайт = 1024 Кбайт.\n\nВопрос 2 (Python):\ncount = 0\nfor i in range(25):\n    x = int(input())\n    if x > 0: count += 1\nprint(count)" },
+    en: { q1: "Binary alphabet. Codes. Units: bit, byte, KB.", q2: "Algorithm to count positive elements in 25 integers.", explanation: "MODEL: count = 0; loop 25 times; if x > 0 then count += 1; print count." } },
+  { n: 2,
+    ru: { q1: "Системы счисления. Позиционные и непозиционные системы. Перевод чисел.",
+      q2: "Напишите программу нахождения суммы всех чётных чисел от 1 до 100.",
+      explanation: "ЭТАЛОН:\n\nВопрос 1. Позиционные: значение зависит от позиции (двоичная, десятичная). Непозиционные: римская. Перевод: деление на основание.\n\nВопрос 2 (Python):\ns = 0\nfor i in range(2, 101, 2):\n    s += i\nprint(s)" },
+    en: { q1: "Number systems.", q2: "Sum of even numbers 1–100.", explanation: "MODEL: s = 0; for i in range(2,101,2): s += i; print(s)." } },
+  { n: 3,
+    ru: { q1: "Логические выражения. Операции НЕ, И, ИЛИ. Таблицы истинности.",
+      q2: "Напишите программу нахождения максимального из трёх введённых чисел.",
+      explanation: "ЭТАЛОН:\n\nВопрос 1. НЕ, И, ИЛИ. A И B = 1 только если оба 1. A ИЛИ B = 0 только если оба 0.\n\nВопрос 2 (Python):\na,b,c = int(input()),int(input()),int(input())\nprint(max(a,b,c))" },
+    en: { q1: "Logic operations.", q2: "Maximum of three numbers.", explanation: "MODEL: print(max(a,b,c))." } },
+  { n: 4,
+    ru: { q1: "Алгоритмы. Свойства алгоритмов. Способы записи.",
+      q2: "Напишите программу подсчёта количества цифр в введённом натуральном числе.",
+      explanation: "ЭТАЛОН:\n\nВопрос 1. Свойства: дискретность, детерминированность, конечность, массовость, результативность.\n\nВопрос 2 (Python):\nn = int(input()); count = 0\nwhile n > 0:\n    count += 1; n //= 10\nprint(count)" },
+    en: { q1: "Algorithms and properties.", q2: "Count digits in a number.", explanation: "MODEL: while n>0: count+=1; n//=10." } },
+  { n: 5,
+    ru: { q1: "Исполнители алгоритмов. Команды. Примеры.",
+      q2: "Напишите программу вычисления факториала n!.",
+      explanation: "ЭТАЛОН:\n\nВопрос 1. Исполнитель — объект, выполняющий команды. Примеры: Чертёжник, Робот, Черепаха.\n\nВопрос 2 (Python):\nn = int(input()); f = 1\nfor i in range(2, n+1): f *= i\nprint(f)" },
+    en: { q1: "Algorithm executors.", q2: "Factorial n!.", explanation: "MODEL: for i in range(2,n+1): f*=i." } },
+  { n: 6,
+    ru: { q1: "Электронные таблицы. Адресация ячеек. Формулы и функции.",
+      q2: "Напишите программу нахождения среднего арифметического 10 введённых чисел.",
+      explanation: "ЭТАЛОН:\n\nВопрос 1. Адресация: относительная (A1), абсолютная ($A$1), смешанная. Функции: СУММ, СРЗНАЧ, ЕСЛИ.\n\nВопрос 2 (Python):\ns = 0\nfor i in range(10): s += int(input())\nprint(s/10)" },
+    en: { q1: "Spreadsheets.", q2: "Average of 10 numbers.", explanation: "MODEL: s/10." } },
+  { n: 7,
+    ru: { q1: "Файловая система. Файлы и папки. Путь к файлу. Расширения.",
+      q2: "Напишите программу проверки, является ли введённое число простым.",
+      explanation: "ЭТАЛОН:\n\nВопрос 1. Файл — именованная область на диске. Путь: C:\\Папка\\файл.txt.\n\nВопрос 2 (Python):\nn = int(input())\nif n < 2: print('Нет')\nelse:\n    k = 0\n    for i in range(2, int(n**0.5)+1):\n        if n % i == 0: k += 1\n    print('Да' if k == 0 else 'Нет')" },
+    en: { q1: "File system.", q2: "Check if number is prime.", explanation: "MODEL: check divisors up to √n." } },
+  { n: 8,
+    ru: { q1: "Компьютерные сети. Локальные и глобальные сети. IP-адреса. Доменные имена.",
+      q2: "Напишите программу перевода числа из десятичной системы в двоичную.",
+      explanation: "ЭТАЛОН:\n\nВопрос 1. Локальные — в здании. Глобальные — Интернет. IP: 4 числа 0–255.\n\nВопрос 2 (Python):\nprint(bin(int(input()))[2:])" },
+    en: { q1: "Computer networks.", q2: "Decimal to binary.", explanation: "MODEL: print(bin(n)[2:])." } },
+  { n: 9,
+    ru: { q1: "Моделирование. Виды моделей. Информационные модели.",
+      q2: "Напишите программу нахождения суммы цифр введённого числа.",
+      explanation: "ЭТАЛОН:\n\nВопрос 1. Модель — упрощённое представление объекта. Виды: материальные, информационные.\n\nВопрос 2 (Python):\nn = int(input()); s = 0\nwhile n > 0:\n    s += n % 10; n //= 10\nprint(s)" },
+    en: { q1: "Modeling.", q2: "Sum of digits.", explanation: "MODEL: s += n%10; n//=10." } },
+  { n: 10,
+    ru: { q1: "Программирование. Основные конструкции: ветвление, циклы.",
+      q2: "Напишите программу вывода всех чисел от 1 до 20, кратных 3.",
+      explanation: "ЭТАЛОН:\n\nВопрос 1. Ветвление — if/else. Циклы — for, while.\n\nВопрос 2 (Python):\nfor i in range(1, 21):\n    if i % 3 == 0: print(i)" },
+    en: { q1: "Programming basics.", q2: "Numbers 1–20 divisible by 3.", explanation: "MODEL: for i in range(1,21): if i%3==0: print(i)." } },
+  { n: 11,
+    ru: { q1: "Кодирование информации. Виды: текст, графика, звук.",
+      q2: "Напишите программу, меняющую местами значения двух переменных.",
+      explanation: "ЭТАЛОН:\n\nВопрос 1. Текст: ASCII, Unicode. Графика: растровая, векторная. Звук: аналоговый, цифровой.\n\nВопрос 2 (Python):\na,b = int(input()),int(input())\na,b = b,a\nprint(a,b)" },
+    en: { q1: "Information encoding.", q2: "Swap two variables.", explanation: "MODEL: a,b = b,a." } },
+  { n: 12,
+    ru: { q1: "Логические элементы компьютера. Схемы И, ИЛИ, НЕ.",
+      q2: "Напишите программу подсчёта количества чётных чисел среди 15 введённых.",
+      explanation: "ЭТАЛОН:\n\nВопрос 1. Логические элементы: И (конъюнктор), ИЛИ (дизъюнктор), НЕ (инвертор).\n\nВопрос 2 (Python):\ncount = 0\nfor i in range(15):\n    if int(input()) % 2 == 0: count += 1\nprint(count)" },
+    en: { q1: "Logic elements.", q2: "Count even numbers among 15.", explanation: "MODEL: count even." } },
+  { n: 13,
+    ru: { q1: "Базы данных. Таблицы, записи, поля. Поиск информации.",
+      q2: "Напишите программу нахождения минимального элемента массива из 10 чисел.",
+      explanation: "ЭТАЛОН:\n\nВопрос 1. БД — организованная совокупность данных. Таблица: строки (записи), столбцы (поля).\n\nВопрос 2 (Python):\na = [int(input()) for _ in range(10)]\nprint(min(a))" },
+    en: { q1: "Databases.", q2: "Minimum in array of 10.", explanation: "MODEL: print(min(a))." } },
+  { n: 14,
+    ru: { q1: "Текстовые редакторы. Форматирование текста. Основные операции.",
+      q2: "Напишите программу вывода таблицы умножения на 5.",
+      explanation: "ЭТАЛОН:\n\nВопрос 1. Word, Блокнот. Форматирование: шрифт, размер, цвет, выравнивание.\n\nВопрос 2 (Python):\nfor i in range(1, 11):\n    print(f'5 x {i} = {5*i}')" },
+    en: { q1: "Text editors.", q2: "Multiplication table by 5.", explanation: "MODEL: print 5*i." } },
+  { n: 15,
+    ru: { q1: "Презентации. Слайды, переходы, анимация. Основные элементы.",
+      q2: "Напишите программу проверки, является ли введённое слово палиндромом.",
+      explanation: "ЭТАЛОН:\n\nВопрос 1. Презентация — набор слайдов. Элементы: заголовок, текст, изображение.\n\nВопрос 2 (Python):\ns = input().lower()\nprint('Да' if s == s[::-1] else 'Нет')" },
+    en: { q1: "Presentations.", q2: "Palindrome check.", explanation: "MODEL: s == s[::-1]." } }
+];
+
+function renderStructureCards() {
+  document.getElementById("structureGrid").innerHTML = structureCards.map(card => {
+    let body = card.items ? `<ul class="mini-list">${card.items.map(it => `<li>${escapeHtml(loc(it))}</li>`).join("")}</ul>` : "";
+    return `<article class="card ${card.cardClass}">
+      <span class="tag ${card.tagClass}">${escapeHtml(loc(card.tag))}</span>
+      <h3>${escapeHtml(loc(card.title))}</h3>${body}
+    </article>`;
+  }).join("");
+}
+
+function renderTopicsCards() {
+  document.getElementById("topicsGrid").innerHTML = topicsCards.map(t => {
+    const studied = topicsState[t.key] ? "studied" : "";
+    const btnLabel = topicsState[t.key] ? "✓ Изучено" : "Отметить";
+    return `<article class="card topic-card ${studied}">
+      <h3>${escapeHtml(loc(t.title))}</h3>
+      <p>${escapeHtml(loc(t.text))}</p>
+      <button class="btn small" onclick="toggleTopic('${t.key}')">${btnLabel}</button>
+    </article>`;
+  }).join("");
+}
+
+function renderChecklist() {
+  document.getElementById("checklistUl").innerHTML = checklistItems.map(item => {
+    const checked = checklistState[item.key] ? "checked" : "";
+    const done = checklistState[item.key] ? "done" : "";
+    return `<li class="check-item ${done}">
+      <input type="checkbox" id="${item.key}" data-key="${item.key}" ${checked} />
+      <label for="${item.key}">${escapeHtml(loc(item.label))}</label>
+    </li>`;
+  }).join("");
+}
+
+function renderPlan() {
+  const L = I18N[currentLang];
+  document.getElementById("planGrid").innerHTML = planDays.map(d => `
+    <div class="day ${d.critical ? "critical" : ""}">
+      <b>${escapeHtml(L.dayPrefix)} ${d.day}</b>
+      <p>${escapeHtml(loc(d.text))}</p>
+    </div>
+  `).join("");
+}
+
+function renderReferences() {
+  document.getElementById("refsGrid").innerHTML = `
+    <div class="card success-card">
+      <h3>Критерии письменной части</h3>
+      <table class="reference-table">
+        <tr><th>Тип</th><th>Балл</th></tr>
+        <tr><td>Задания 1–9 (краткий ответ)</td><td>0–1 каждый</td></tr>
+        <tr><td>Задание 10 (развёрнутый)</td><td>0–2</td></tr>
+        <tr><td><strong>Максимум</strong></td><td><strong>11</strong></td></tr>
+      </table>
+    </div>
+    <div class="card warn-card">
+      <h3>Критерии устной части</h3>
+      <table class="reference-table">
+        <tr><th>Вопрос</th><th>Балл</th></tr>
+        <tr><td>Теоретический</td><td>0–3</td></tr>
+        <tr><td>Практический</td><td>0–3</td></tr>
+        <tr><td><strong>Максимум</strong></td><td><strong>6</strong></td></tr>
+      </table>
+    </div>
+    <div class="card danger-card">
+      <h3>Шкала перевода (Письменная)</h3>
+      <table class="reference-table">
+        <tr><th>Отметка</th><th>Баллы</th></tr>
+        <tr><td>«2»</td><td>0–3</td></tr>
+        <tr><td>«3»</td><td>4–6</td></tr>
+        <tr><td>«4»</td><td>7–9</td></tr>
+        <tr><td>«5»</td><td>10–11</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Шкала перевода (Устная)</h3>
+      <table class="reference-table">
+        <tr><th>Отметка</th><th>Баллы</th></tr>
+        <tr><td>«2»</td><td>0–1</td></tr>
+        <tr><td>«3»</td><td>2–3</td></tr>
+        <tr><td>«4»</td><td>4–5</td></tr>
+        <tr><td>«5»</td><td>6</td></tr>
+      </table>
+    </div>
+  `;
+}
+
+function renderOral() {
+  const container = document.getElementById("oralContainer");
+  const L = I18N[currentLang];
+  container.innerHTML = oralTasks.map(t => {
+    const tr = t[currentLang];
+    return `
+      <article class="manual-card">
+        <span class="tag red">${escapeHtml(L.oralTag)}</span>
+        <h3>${escapeHtml(L.oralTaskPrefix)} №${t.n}</h3>
+        <div class="q-part-label">${escapeHtml(L.oralQ1)}</div>
+        <div class="q-text">${escapeHtml(tr.q1)}</div>
+        <div class="oral-self-check" data-ticket="${t.n}" data-q="1">
+          <span class="oral-score-label">${escapeHtml(L.oralSelfLabel)}</span>
+          ${[3,2,1,0].map(score => `
+            <div class="oral-score-row">
+              <input type="radio" name="oral-${t.n}-q1" id="oral-${t.n}-q1-${score}" value="${score}" data-ticket="${t.n}" data-q="1" />
+              <label for="oral-${t.n}-q1-${score}">${escapeHtml(L["oralScore" + score] || score)}</label>
+            </div>
+          `).join("")}
+        </div>
+        <div class="q-part-label" style="margin-top:14px;">${escapeHtml(L.oralQ2)}</div>
+        <div class="q-text">${escapeHtml(tr.q2)}</div>
+        <div class="oral-self-check" data-ticket="${t.n}" data-q="2">
+          <span class="oral-score-label">${escapeHtml(L.oralSelfLabel)}</span>
+          ${[3,2,1,0].map(score => `
+            <div class="oral-score-row">
+              <input type="radio" name="oral-${t.n}-q2" id="oral-${t.n}-q2-${score}" value="${score}" data-ticket="${t.n}" data-q="2" />
+              <label for="oral-${t.n}-q2-${score}">${escapeHtml(L["oralScore" + score] || score)}</label>
+            </div>
+          `).join("")}
+        </div>
+        <div class="oral-ticket-total" id="oral-total-${t.n}">${escapeHtml(L.oralTicketTotal)}: 0 / 6</div>
+        <div class="check-input">
+          <label>${escapeHtml(L.oralSelfLabel)}</label>
+          <textarea data-oral="${t.n}" placeholder="${escapeHtml(L.oralPlaceholder)}">${escapeHtml(oralNotes[t.n] || "")}</textarea>
+        </div>
+        <div style="margin-top:10px;">
+          <button class="btn small secondary" onclick="showOralModel(${t.n})">${escapeHtml(L.showSolution)}</button>
+        </div>
+        <div id="oralResult-${t.n}"></div>
+      </article>
+    `;
+  }).join("");
+  updateOralTotals();
+  updateOralSummary();
+}
+
+function updateOralTotals() {
+  oralTasks.forEach(t => {
+    let sum = 0;
+    [1, 2].forEach(q => {
+      const checked = document.querySelector(`input[name="oral-${t.n}-q${q}"]:checked`);
+      if (checked) sum += parseInt(checked.value, 10);
+    });
+    const box = document.getElementById("oral-total-" + t.n);
+    if (box) box.textContent = `${I18N[currentLang].oralTicketTotal}: ${sum} / 6`;
+  });
+}
+
+function updateOralSummary() {
+  const box = document.getElementById("oralSummaryBox");
+  if (!box) return;
+  const L = I18N[currentLang];
+  let total = 0, answered = 0;
+  oralTasks.forEach(t => {
+    let sum = 0, hasAny = false;
+    [1, 2].forEach(q => {
+      const checked = document.querySelector(`input[name="oral-${t.n}-q${q}"]:checked`);
+      if (checked) { sum += parseInt(checked.value, 10); hasAny = true; }
+    });
+    total += sum;
+    if (hasAny) answered++;
+  });
+  const maxTotal = oralTasks.length * 6;
+  const pct = Math.round((total / maxTotal) * 100);
+  const verdict = pct >= 85 ? L.verdictExcellent : pct >= 60 ? L.verdictGood : L.verdictNeeds;
+  box.innerHTML = `
+    <div class="oral-summary-box">
+      <div class="score">${total} / ${maxTotal}</div>
+      <p style="margin:8px 0;">${escapeHtml(verdict)}</p>
+      <p style="color:var(--muted);margin:0;">${escapeHtml(L.oralSummaryProgress)}: ${answered} / ${oralTasks.length}</p>
+      <p style="color:var(--muted);margin:6px 0 0;font-size:13px;">${escapeHtml(L.oralScaleHint)}</p>
+    </div>`;
+}
+
+function showOralModel(n) {
+  const t = oralTasks.find(x => x.n === n);
+  if (!t) return;
+  const box = document.getElementById("oralResult-" + n);
+  const L = I18N[currentLang];
+  box.innerHTML = `
+    <div class="result-block correct">
+      <div class="verdict correct">📖 ${escapeHtml(L.explanation)}</div>
+      <div class="result-row" style="white-space:pre-wrap;">${escapeHtml(t[currentLang].explanation)}</div>
+    </div>`;
+}
+
+function levelLabel(level) {
+  const L = I18N[currentLang];
+  return L["level" + level.replace("v", "")] || level;
+}
+function sourceLabel(q) {
+  const L = I18N[currentLang];
+  const tpl = L["source" + (q.level === "short" ? "Short" : "Long")] || "GVE-9 2027, task {task}";
+  return tpl.replace("{task}", q.task);
+}
+
+function renderQuestions() {
+  const container = document.getElementById("quizContainer");
+  const L = I18N[currentLang];
+  container.innerHTML = "";
+  quiz.forEach(q => {
+    const block = document.createElement("div");
+    block.className = "question-block";
+    block.id = "q" + q.id;
+    block.dataset.section = q.section;
+
+    let trainerHtml = "";
+    if (q.type === "single") {
+      let opts = "";
+      q.options.forEach((opt, idx) => {
+        opts += `<button class="option" data-q="${q.id}" data-idx="${idx}" data-value="${escapeHtml(opt)}" onclick="handleAnswer(${q.id}, ${idx})">${escapeHtml(opt)}</button>`;
+      });
+      trainerHtml = `<div class="options" id="options-${q.id}">${opts}</div>`;
+    } else if (q.type === "match") {
+      trainerHtml = `
+        <div class="match-input-row">
+          <input type="text" id="match-${q.id}" maxlength="30" placeholder="${escapeHtml(L.matchPlaceholder)}" value="${escapeHtml(savedAnswers[q.id] || "")}" />
+          <button class="btn small" onclick="handleMatch(${q.id})">${escapeHtml(L.matchCheck)}</button>
+        </div>`;
+    } else if (q.type === "long") {
+      trainerHtml = `
+        <div class="writing-area">
+          <textarea id="solution_${q.id}" data-qid="${q.id}" placeholder="Напиши решение здесь...">${escapeHtml(savedAnswers["solution_" + q.id] || "")}</textarea>
+        </div>
+        <div style="margin-top:10px;">
+          <button class="btn small secondary" onclick="toggleSolution(${q.id})">${escapeHtml(L.showSolution)}</button>
+        </div>`;
+    }
+
+    const tr = q[currentLang];
+
+    block.innerHTML = `
+      <div class="q-number">${escapeHtml(levelLabel(q.level))}, ${currentLang === "ru" ? "задание" : "task"} ${q.task}</div>
+      <div class="q-part">
+        <span class="q-part-label">${escapeHtml(L.questionLabel1)}</span>
+        <div class="q-text">${escapeHtml(tr.text)}</div>
+      </div>
+      <div class="q-info">
+        <span class="q-part-label" style="color:var(--accent);">${escapeHtml(L.questionLabel2)}</span>
+        <p style="margin:0;">${escapeHtml(tr.info)}</p>
+      </div>
+      <div class="q-part">
+        <span class="q-trainer-label">${escapeHtml(L.questionLabel3)}</span>
+        ${trainerHtml}
+      </div>
+      <div id="result-${q.id}"></div>`;
+    container.appendChild(block);
+  });
+
+  container.querySelectorAll("textarea[data-qid]").forEach(ta => {
+    ta.addEventListener("input", e => {
+      const qid = e.target.dataset.qid;
+      savedAnswers["solution_" + qid] = e.target.value;
+      updateStats();
+    });
+  });
+
+  updateFilterLabels();
+  applyFilter();
+  updateStats();
+  updateSummary();
+}
+
+function handleAnswer(qId, selectedIdx) {
+  const q = quiz.find(item => item.id === qId);
+  if (!q || savedAnswers[qId] !== undefined) return;
+  const selectedValue = q.options[selectedIdx];
+  savedAnswers[qId] = selectedValue;
+  applyAnswerVisual(q, selectedValue);
+  showResult(q, selectedValue);
+  updateStats();
+  updateSummary();
+}
+
+function normalizeInput(str) {
+  return String(str || "").trim().toLowerCase().replace(/ё/g, "е").replace(/[\s,;.\-–—]/g, "");
+}
+
+function handleMatch(qId) {
+  const q = quiz.find(item => item.id === qId);
+  if (!q) return;
+  const input = document.getElementById("match-" + qId);
+  const value = normalizeInput(input.value);
+  savedAnswers[qId] = value;
+  showMatchResult(q, value);
+  updateStats();
+  updateSummary();
+}
+
+// ИСПРАВЛЕНО: поддержка массива правильных ответов
+function getCorrectMatches(q) {
+  return Array.isArray(q.correctMatch) ? q.correctMatch : [q.correctMatch];
+}
+
+function showMatchResult(q, value) {
+  const resultBox = document.getElementById("result-" + q.id);
+  if (!resultBox) return;
+  const L = I18N[currentLang];
+  const nv = normalizeInput(value);
+  const correctList = getCorrectMatches(q);
+  const isCorrect = correctList.some(c => normalizeInput(c) === nv);
+  const displayCorrect = correctList.join(" / ");
+  resultBox.innerHTML = `
+    <div class="result-block ${isCorrect ? "correct" : "wrong"}">
+      <div class="verdict ${isCorrect ? "correct" : "wrong"}">${escapeHtml(isCorrect ? L.resultCorrect : L.resultWrong)}</div>
+      <div class="result-row"><strong>${escapeHtml(L.correctAnswer)}</strong> ${escapeHtml(displayCorrect)}</div>
+      <div class="result-row"><strong>${escapeHtml(L.explanation)}</strong> ${escapeHtml(q[currentLang].explanation).replace(/\n/g, "<br/>")}</div>
+      <div class="source-row"><strong>${escapeHtml(L.source)}</strong> ${escapeHtml(sourceLabel(q))}</div>
+    </div>`;
+}
+
+function toggleSolution(qId) {
+  const q = quiz.find(item => item.id === qId);
+  if (!q) return;
+  const resultBox = document.getElementById("result-" + qId);
+  const L = I18N[currentLang];
+  const isHidden = !resultBox.innerHTML || resultBox.innerHTML.trim() === "";
+  resultBox.innerHTML = isHidden ? `
+    <div class="result-block correct">
+      <div class="verdict correct">📖 ${escapeHtml(L.explanation)}</div>
+      <div class="result-row" style="white-space:pre-wrap;">${escapeHtml(q[currentLang].explanation)}</div>
+    </div>` : "";
+}
+
+function applyAnswerVisual(q, selectedValue) {
+  const optionsBox = document.getElementById("options-" + q.id);
+  if (!optionsBox) return;
+  const correctValue = q.options[q.correct];
+  optionsBox.querySelectorAll(".option").forEach(btn => {
+    btn.disabled = true;
+    const value = btn.dataset.value;
+    if (value === correctValue) btn.classList.add("correct");
+    if (value === selectedValue && selectedValue !== correctValue) btn.classList.add("wrong");
+  });
+}
+
+function showResult(q, selectedValue) {
+  const resultBox = document.getElementById("result-" + q.id);
+  if (!resultBox) return;
+  const L = I18N[currentLang];
+  const tr = q[currentLang];
+  const correctValue = q.options[q.correct];
+  const isCorrect = selectedValue === correctValue;
+  resultBox.innerHTML = `
+    <div class="result-block ${isCorrect ? "correct" : "wrong"}">
+      <div class="verdict ${isCorrect ? "correct" : "wrong"}">${escapeHtml(isCorrect ? L.resultCorrect : L.resultWrong)}</div>
+      <div class="result-row"><strong>${escapeHtml(L.correctAnswer)}</strong> ${escapeHtml(correctValue)}</div>
+      <div class="result-row"><strong>${escapeHtml(L.explanation)}</strong> ${escapeHtml(tr.explanation)}</div>
+      <div class="source-row"><strong>${escapeHtml(L.source)}</strong> ${escapeHtml(sourceLabel(q))}</div>
+    </div>`;
+}
+
+function setFilter(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  if (btn) btn.classList.add("active");
+  applyFilter();
+}
+function applyFilter() {
+  quiz.forEach(q => {
+    const block = document.getElementById("q" + q.id);
+    if (!block) return;
+    let show = true;
+    if (currentFilter === "part1") show = q.section === "part1";
+    else if (currentFilter === "part2") show = q.section === "part2";
+    block.style.display = show ? "" : "none";
+  });
+}
+function updateFilterLabels() {
+  const L = I18N[currentLang];
+  const cPart1 = quiz.filter(q => q.section === "part1").length;
+  const cPart2 = quiz.filter(q => q.section === "part2").length;
+  document.getElementById("filterAll").textContent = `${L.filterAll} (${quiz.length})`;
+  document.getElementById("filterPart1").textContent = `${L.filterPart1} (${cPart1})`;
+  document.getElementById("filterPart2").textContent = `${L.filterPart2} (${cPart2})`;
+}
+
+function toggleTopic(key) {
+  topicsState[key] = !topicsState[key];
+  saveAll();
+  renderTopicsCards();
+  updateStats();
+}
+
+function isQuestionAnswered(q) {
+  if (q.type === "single") { const s = savedAnswers[q.id]; return typeof s === "string" && q.options.includes(s); }
+  if (q.type === "match") return typeof savedAnswers[q.id] === "string" && savedAnswers[q.id].length > 0;
+  if (q.type === "long") return !!savedAnswers["solution_" + q.id];
+  return false;
+}
+function isQuestionCorrect(q) {
+  if (q.type === "single") {
+    const s = savedAnswers[q.id];
+    return typeof s === "string" && q.options.includes(s) && s === q.options[q.correct];
+  }
+  if (q.type === "match") {
+    const s = savedAnswers[q.id];
+    if (typeof s !== "string" || !s) return false;
+    const correctList = getCorrectMatches(q);
+    return correctList.some(c => normalizeInput(c) === normalizeInput(s));
+  }
+  return false;
+}
+
+function updateStats() {
+  const total = quiz.length;
+  let answered = 0, correct = 0;
+  quiz.forEach(q => { if (isQuestionAnswered(q)) answered++; if (isQuestionCorrect(q)) correct++; });
+  document.getElementById("answeredCount").textContent = answered + "/" + total;
+  document.getElementById("correctCount").textContent = correct;
+  const clDone = checklistItems.filter(i => checklistState[i.key]).length;
+  const clPct = Math.round((clDone / checklistItems.length) * 100);
+  document.getElementById("checklistProgress").textContent = clPct + "%";
+  const overall = Math.round((answered / total * 100 + clPct) / 2);
+  document.getElementById("overall").value = overall;
+}
+
+function updateSummary() {
+  const box = document.getElementById("summaryBox");
+  const L = I18N[currentLang];
+  const total = quiz.length;
+  let answered = 0, correct = 0, totalGraded = 0;
+  quiz.forEach(q => {
+    if (isQuestionAnswered(q)) {
+      answered++;
+      if (q.type !== "long") {
+        totalGraded++;
+        if (isQuestionCorrect(q)) correct++;
+      }
+    }
+  });
+  if (answered < total) {
+    box.innerHTML = `<div class="summary">
+      <p style="margin:0;color:var(--muted);">${escapeHtml(L.summaryAnswered)} <strong>${answered}</strong> ${escapeHtml(L.summaryOf)} ${total}</p>
+      <p style="margin:8px 0 0;color:var(--muted);">${escapeHtml(L.summaryCorrect)} <strong>${correct}</strong> (из ${totalGraded} автопроверяемых)</p>
+      <p style="margin:8px 0 0;color:var(--muted);font-size:14px;">${escapeHtml(L.summaryFinish)}</p>
+    </div>`;
+    return;
+  }
+  const pct = totalGraded ? Math.round((correct / totalGraded) * 100) : 0;
+  const verdict = pct >= 85 ? L.verdictExcellent : pct >= 60 ? L.verdictGood : L.verdictNeeds;
+  box.innerHTML = `<div class="summary">
+    <div class="score">${correct}/${totalGraded}</div>
+    <p style="margin:8px 0;">${escapeHtml(verdict)}</p>
+    <p style="color:var(--muted);margin:0;">${escapeHtml(L.summaryCorrect)} ${pct}%</p>
+  </div>`;
+}
+
+function resetAll() {
+  if (!confirm(I18N[currentLang].resetConfirm)) return;
+  savedAnswers = {};
+  oralNotes = {};
+  checklistState = {};
+  topicsState = {};
+  renderQuestions();
+  renderOral();
+  renderChecklist();
+  renderTopicsCards();
+  document.querySelectorAll(".oral-self-check input[type='radio']").forEach(r => r.checked = false);
+  updateOralTotals();
+  updateOralSummary();
+  resetOralTimer();
+  updateStats();
+  updateSummary();
+}
+
+function applyUIText() {
+  const L = I18N[currentLang];
+  document.title = L.docTitle;
+  document.documentElement.lang = currentLang;
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.dataset.i18n;
+    if (L[key] != null) el.innerHTML = L[key];
+  });
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem(STORAGE.lang, lang);
+  document.querySelectorAll(".lang-option").forEach(sp => sp.classList.toggle("active", sp.dataset.lang === lang));
+  savedAnswers = {};
+  oralNotes = {};
+  applyUIText();
+  renderAll();
+  updateOralTotals();
+  updateOralSummary();
+}
+
+function renderAll() {
+  renderStructureCards();
+  renderTopicsCards();
+  renderQuestions();
+  renderOral();
+  renderReferences();
+  renderChecklist();
+  renderPlan();
+  updateStats();
+  updateSummary();
+}
+
+/* ОСНОВНОЙ ТАЙМЕР */
+let timerTotal = 150 * 60, timerRemaining = timerTotal, timerInterval = null, timerRunning = false;
+function formatTime(sec) {
+  const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60;
+  return [h, m, s].map(v => String(v).padStart(2, "0")).join(":");
+}
+function updateTimerDisplay() {
+  const display = document.getElementById("timerDisplay");
+  const widget = document.getElementById("timerWidget");
+  display.textContent = formatTime(timerRemaining);
+  widget.classList.toggle("warning", timerRemaining <= 300 && timerRemaining > 60);
+  widget.classList.toggle("danger", timerRemaining <= 60);
+}
+function updateTimerButton() {
+  const L = I18N[currentLang];
+  const btn = document.getElementById("timerToggle");
+  btn.textContent = timerRunning ? "⏸" : "▶";
+  btn.setAttribute("title", timerRunning ? L.timerPause : L.timerStart);
+}
+function stopTimer() { timerRunning = false; if (timerInterval) clearInterval(timerInterval); timerInterval = null; updateTimerButton(); }
+function startTimer() {
+  if (timerRunning || timerRemaining <= 0) return;
+  timerRunning = true;
+  timerInterval = setInterval(() => {
+    if (timerRemaining > 0) { timerRemaining--; updateTimerDisplay(); }
+    if (timerRemaining === 0) { stopTimer(); alert(I18N[currentLang].timerUp); }
+  }, 1000);
+  updateTimerButton();
+}
+function toggleTimer() { timerRunning ? stopTimer() : startTimer(); }
+function resetTimer() { stopTimer(); timerRemaining = timerTotal; updateTimerDisplay(); }
+
+/* УСТНЫЙ ТАЙМЕР */
+let oralTimerTotal = 45 * 60, oralTimerRemaining = oralTimerTotal, oralTimerInterval = null, oralTimerRunning = false;
+function updateOralTimerDisplay() {
+  const display = document.getElementById("oralTimerDisplay");
+  const widget = document.getElementById("oralTimerWidget");
+  if (!display) return;
+  const m = Math.floor(oralTimerRemaining / 60), s = oralTimerRemaining % 60;
+  display.textContent = `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+  widget.classList.toggle("warning", oralTimerRemaining <= 300 && oralTimerRemaining > 60);
+  widget.classList.toggle("danger", oralTimerRemaining <= 60);
+}
+function updateOralTimerButton() {
+  const btn = document.getElementById("oralTimerToggle");
+  if (btn) btn.textContent = oralTimerRunning ? "⏸" : "▶";
+}
+function stopOralTimer() { oralTimerRunning = false; if (oralTimerInterval) clearInterval(oralTimerInterval); oralTimerInterval = null; updateOralTimerButton(); }
+function startOralTimer() {
+  if (oralTimerRunning || oralTimerRemaining <= 0) return;
+  oralTimerRunning = true;
+  oralTimerInterval = setInterval(() => {
+    if (oralTimerRemaining > 0) { oralTimerRemaining--; updateOralTimerDisplay(); }
+    if (oralTimerRemaining === 0) { stopOralTimer(); alert(I18N[currentLang].oralTimerUp); }
+  }, 1000);
+  updateOralTimerButton();
+}
+function toggleOralTimer() { oralTimerRunning ? stopOralTimer() : startOralTimer(); }
+function resetOralTimer() { stopOralTimer(); oralTimerRemaining = oralTimerTotal; updateOralTimerDisplay(); }
+
+function copyPhone() {
+  const phone = "89202275676";
+  const status = document.getElementById("copyStatus");
+  const L = I18N[currentLang];
+  const show = () => { status.textContent = L.copied; setTimeout(() => status.textContent = "", 2500); };
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(phone).then(show).catch(() => fallbackCopy(phone, show));
+  } else fallbackCopy(phone, show);
+}
+function fallbackCopy(text, cb) {
+  const t = document.createElement("textarea");
+  t.value = text; t.style.position = "fixed"; t.style.opacity = "0";
+  document.body.appendChild(t); t.focus(); t.select();
+  try { document.execCommand("copy"); cb(); } catch (e) { alert(I18N[currentLang].copyFail + text); }
+  document.body.removeChild(t);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadAll();
+  applyTheme();
+  applyUIText();
+  renderAll();
+  updateTimerDisplay();
+  updateOralTimerDisplay();
+
+  document.getElementById("themeToggle").addEventListener("click", toggleTheme);
+  document.getElementById("langToggle").addEventListener("click", () => {
+    setLang(currentLang === "ru" ? "en" : "ru");
+  });
+  document.getElementById("timerToggle").addEventListener("click", toggleTimer);
+  document.getElementById("timerReset").addEventListener("click", resetTimer);
+  document.getElementById("oralTimerToggle").addEventListener("click", toggleOralTimer);
+  document.getElementById("oralTimerReset").addEventListener("click", resetOralTimer);
+  document.getElementById("checklistUl").addEventListener("change", e => {
+    if (e.target.matches("input[type='checkbox']")) {
+      const key = e.target.dataset.key;
+      checklistState[key] = e.target.checked;
+      const li = e.target.closest(".check-item");
+      if (li) li.classList.toggle("done", e.target.checked);
+      updateStats();
+    }
+  });
+  document.getElementById("oralContainer").addEventListener("input", e => {
+    if (e.target.matches("textarea[data-oral]")) {
+      oralNotes[e.target.dataset.oral] = e.target.value;
+    }
+  });
+  document.getElementById("oralContainer").addEventListener("change", e => {
+    if (e.target.matches("input[type='radio'][data-ticket]")) {
+      updateOralTotals();
+      updateOralSummary();
+    }
+  });
+});
+</script>
+</body>
+</html>
